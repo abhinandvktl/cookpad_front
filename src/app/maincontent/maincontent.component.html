@@ -1,0 +1,88 @@
+<!-- upload post -->
+<div class="uploadpost bg-body-secondary mt-2 p-3">
+    <button type="button" class="btn btn-light w-75" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+        <i class="fa-solid fa-image" style="color: #12983f;"></i>Upload Your Post...
+    </button>
+</div>
+
+<!-- Modal -->
+<form #addpostForm="ngForm" (ngSubmit)="handleAddPost(addpostForm)">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Upload</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- recipe name -->
+                    <div class="form-floating mb-3">
+                        <input type="email" #recipename="ngModel" [(ngModel)]="postDetails.recipename" name="id" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                        <label for="floatingInput">Recipe Name</label>
+                    </div>
+                    <!-- How to make it -->
+                    <div class="form-floating mb-3">
+                        <textarea #description="ngModel" [(ngModel)]="postDetails.description" name="description" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                            style="height: 100px" required></textarea>
+                        <label for="floatingTextarea2">How to make it..?</label>
+                    </div>
+                    <!-- image upload -->
+                    <div class="input-group">
+                        <input type="file" name="image" #fileInput (change)="onFileSelected($event)" class="form-control" id="inputGroupFile04" 
+                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-outline-secondary">Upload</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- post body -->
+<div class="posts bg-body-secondary mt-4 p-3">
+    <div *ngFor="let users of allUsers" class="card">
+        <div class="card-body">
+
+            <div class="d-flex">
+                <div>
+                    <img src="https://imgv3.fotor.com/images/blog-cover-image/10-profile-picture-ideas-to-make-you-stand-out.jpg"
+                        alt="" width="40px" height="35px" style="border-radius: 50%;">
+                </div>
+
+                <div class="ms-3">
+                    <h5 class="card-title">{{users.username}}</h5>
+                </div>
+            </div>
+
+            <div>
+
+                <p class="d-inline-flex gap-1">
+                    <a class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+                        aria-controls="collapseExample">
+                        recipe name <i class="fa-solid fa-arrow-down"></i>
+                    </a>
+                </p>
+                <div class="collapse" id="collapseExample">
+                    <div class="card card-body">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ea illo ratione non
+                        cumque? Nihil fugiat obcaecati sunt natus culpa unde dolorem, voluptatibus tempora eligendi
+                        eveniet recusandae illo atque praesentium. Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. Cupiditate velit alias, qui perferendis dolore accusantium molestias itaque hic optio quis
+                        nulla atque distinctio molestiae reprehenderit magnam nam. Quasi, illum deserunt? Lorem, ipsum
+                        dolor sit amet consectetur adipisicing elit. Tempore hic nam exercitationem rem quam est aperiam
+                        fugiat accusantium harum nemo, neque illum officia amet, iste corrupti quasi natus, ipsa dolore!
+                    </div>
+                </div>
+
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Hamburger_%2812164386105%29.jpg" alt=""
+                    width="100%" height="100%">
+            </div>
+
+        </div>
+    </div>
+</div>
+

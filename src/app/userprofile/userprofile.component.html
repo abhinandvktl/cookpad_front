@@ -1,0 +1,145 @@
+<app-header></app-header>
+
+<div class="user-profile-section">
+    
+    <div class="profile bg-body-secondary mt-2 pt-3">
+
+        <div class="d-flex justify-content-center">
+            <img src="https://imgv3.fotor.com/images/blog-cover-image/10-profile-picture-ideas-to-make-you-stand-out.jpg"
+                alt="" width="80px" height="70px" style="border-radius: 50%;">
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <h4>{{loggeduserdetails?.username}}</h4>
+        </div>
+        <div class="d-flex justify-content-center">
+            <p>{{loggeduserdetails?.email}}</p>
+        </div>
+
+    </div>
+
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-8">
+                
+                <!-- post body -->
+                <div class="posts bg-body-secondary mt-2 p-3 mb-2">
+                    <div class="card">
+                        <div class="card-body">
+
+                            <div class="d-flex">
+                                <div>
+                                    <img src="https://imgv3.fotor.com/images/blog-cover-image/10-profile-picture-ideas-to-make-you-stand-out.jpg"
+                                        alt="" width="40px" height="35px" style="border-radius: 50%;">
+                                </div>
+
+                                <div class="ms-3">
+                                    <h5 class="card-title">Card title</h5>
+                                    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                                </div>
+                            </div>
+
+                            <div>
+
+                                <p class="d-inline-flex gap-1">
+                                    <a class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                                        aria-expanded="false" aria-controls="collapseExample">
+                                        recipe name <i class="fa-solid fa-arrow-down"></i>
+                                    </a>
+                                </p>
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ea illo
+                                        ratione non
+                                        cumque? Nihil fugiat obcaecati sunt natus culpa unde dolorem, voluptatibus
+                                        tempora eligendi
+                                        eveniet recusandae illo atque praesentium. Lorem ipsum dolor sit amet,
+                                        consectetur adipisicing
+                                        elit. Cupiditate velit alias, qui perferendis dolore accusantium molestias
+                                        itaque hic optio quis
+                                        nulla atque distinctio molestiae reprehenderit magnam nam. Quasi, illum
+                                        deserunt? Lorem, ipsum
+                                        dolor sit amet consectetur adipisicing elit. Tempore hic nam exercitationem rem
+                                        quam est aperiam
+                                        fugiat accusantium harum nemo, neque illum officia amet, iste corrupti quasi
+                                        natus, ipsa dolore!
+                                    </div>
+                                </div>
+
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Hamburger_%2812164386105%29.jpg"
+                                    alt="" width="100%" height="100%">
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="col-4">
+
+                <!-- upload post -->
+                <div class="uploadpost bg-body-secondary mt-2 p-3 mb-2">
+                    <button type="button" class="btn btn-light w-75" data-bs-toggle="modal"
+                        data-bs-target="#staticBackdrop">
+                        <i class="fa-solid fa-image" style="color: #12983f;"></i>Upload Your Post...
+                    </button>
+                </div>
+
+                <!-- Modal -->
+
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Upload</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <!-- recipe name -->
+
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="floatingInput"
+                                        placeholder="name@example.com">
+                                    <label for="floatingInput">Recipe Name</label>
+                                </div>
+                                
+                                <!-- How to make it -->
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" placeholder="Leave a comment here"
+                                        id="floatingTextarea2" style="height: 100px"></textarea>
+                                    <label for="floatingTextarea2">How to make it..?</label>
+                                </div>
+                                <!-- image upload -->
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="inputGroupFile04"
+                                        aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                </div>
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-secondary">Upload</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="bg-body-secondary pb-5">
+                    <img src="https://i.postimg.cc/VLMLJH8H/COOKPAD-LOGO.png" alt="no image" width="50%" height="50%">
+
+                    <p>Unleash your inner chef with our Recipe Book! Share your favorite recipes, tweak them to
+                        perfection, and savor the joy of cooking.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<app-footer></app-footer>

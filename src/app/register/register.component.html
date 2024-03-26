@@ -1,0 +1,56 @@
+<div style="margin-top: 80px;">
+
+    <div class="d-flex flex-column justify-content-center align-items-center">
+
+        <div class="row border rounded shadow p-5 mt-4">
+            <!-- image -->
+            <div class="col-lg-6">
+                <img src="https://i.postimg.cc/jdQVT3C0/login2-removebg-preview.png" alt="...." class="img-fluid">
+            </div>
+
+            <div class="col-lg-6" style="background-color: rgb(154, 185, 199);">
+                <div style="height: 100%;" class="d-flex flex-column align-items-center">
+                    <h3 class="fw-bolder mt-3">Sign Up</h3>
+
+                    <form [formGroup]="registerForm" class="mt-3" (ngSubmit)="register()">
+
+                        <!-- username -->
+                        <div class="mb-3">
+                            <input type="text" placeholder="User Name" class="form-control" formControlName="username">
+                        </div>
+                        <!-- validation error -->
+                        <div *ngIf="this.registerForm.get('username')?.errors&&this.registerForm.get('username')?.touched" class="fw-bolder text-danger">
+                            Invalid username
+                        </div>
+
+                        <!-- email id -->
+                        <div class="mb-3">
+                            <input type="text" placeholder="E-mail" class="form-control" formControlName="email">
+                        </div>
+                        <!-- validation error -->
+                        <div *ngIf="this.registerForm.get('email')?.errors&&this.registerForm.get('email')?.touched" class="fw-bolder text-danger">
+                            Invalid email
+                        </div>
+
+                        <!-- password -->
+                        <div class="mb-3">
+                            <input type="password" placeholder="password" class="form-control" formControlName="password">
+                        </div>
+                        <!-- validation error -->
+                        <div *ngIf="this.registerForm.get('password')?.errors&&this.registerForm.get('password')?.touched" class="fw-bolder text-danger">
+                            Invalid password
+                        </div>
+
+                        <input type="submit" class="btn btn-light mt-3 mb-4" value="Register">
+
+                    </form>
+
+                    <p>Already a user? click here <a class="text-light" routerLink="/">Login</a></p>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
