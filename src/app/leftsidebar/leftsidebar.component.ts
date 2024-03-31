@@ -26,7 +26,7 @@ export class LeftsidebarComponent implements OnInit {
 
 
 
-        console.log(this.loggeduserdetails);
+        // console.log(this.loggeduserdetails);
         
         // Now you can use loggeduserdetails
     } else {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from '../services/api.service';
@@ -11,6 +11,21 @@ import { NgForm } from '@angular/forms';
 })
 export class UserprofileComponent implements OnInit {
 
+  @ViewChild('fileInput')
+  fileInput!: ElementRef;
+
+  onFileSelected(event: any, userpost: any): void {
+    const file = event.target.files[0];
+    this.postDetails = file;
+  }
+
+  onFileSelectedprofile(event: any): void {
+    const file = event.target.files[0];
+    this.postDetailsprofile.image = file;
+  }
+
+  postDetailsprofile = { recipename: '', description: '', image: '' }
+  
   loggeduserdetails: any;
 
   token: string = ''
@@ -18,15 +33,19 @@ export class UserprofileComponent implements OnInit {
   userposts: any = []
 
   SERVER_URL = 'http://localhost:3000'
+  
   username: any = ''
 
-  recipename: any = ''
-  description: any = ''
 
-  postDetails = { recipename: '', description: '', image: '' }
+
+  postDetails : any =''
+
+
 
 
   constructor(private userService: UserService, private api: ApiService, private http: HttpClient) { }
+
+
 
   ngOnInit(): void {
 
@@ -57,6 +76,8 @@ export class UserprofileComponent implements OnInit {
       next: (res: any) => {
         console.log(res);
         this.userposts = res
+
+        this.userposts.reverse()
       },
       error: (err: any) => {
         console.log(err);
@@ -95,65 +116,51 @@ export class UserprofileComponent implements OnInit {
     })
   }
 
+
+
+
   // edit post
-  handleupdate(event: any): void {
-    event.preventDefault();
-    if (!this.recipename || !this.description) {
-      alert('please fill the form completely')
+  handleupdate(form: NgForm, userpost: any): void {
+
+   
+    
+    if (!form.valid) {
+        alert('Please fill the form completely');
     } else {
-      const reqBody = new FormData();
-      reqBody.append('recipename', this.recipename);
-      reqBody.append('make', this.description);
+        const reqBody = new FormData();
+        reqBody.append('recipename', userpost.recipename);
+        reqBody.append('description', userpost.description);
+        reqBody.append('image', this.postDetails); // Assuming image is part of userpost
+        console.log(userpost._id);
+        
 
-      const reqHeader = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
+        const reqHeader = new HttpHeaders().set("Authorization", `Barear ${this.token}`)
+        
 
-      this.api.editPost(this.loggeduserdetails._id, reqBody, reqHeader).subscribe({
-        next: (result: any) => {
-          if (result.status === 200) {
-            // Update user interface as needed
-            alert('Updated Post..');
-            // Optionally close modal or do any other action needed
-          } else {
-            alert(result.response.data);
-          }
-        },
-        error: (error: any) => {
-          console.error(error);
-          alert('An error occurred while updating the post.');
-        }
-      })
+        this.api.editPost(userpost._id, reqBody, reqHeader).subscribe({
+            next: (result: any) => {
+                if (result.status === 200) {
+                    // Update user interface as needed
+                    alert('Updated Post.');
+                    // Optionally close modal or do any other action needed
+                } else {
+                    alert(result);
+                }
+            },
+            error: (error: any) => {
+                console.error(error);
+                alert('An error occurred while updating the post.');
+            }
+        });
     }
-  }
-
-  // editPostinfo(postId:any){
-
-  //   const reqBody = {
-  //     recipename: this.recipename
-
-  //   }
-
-  //   const reqHeader = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
-
-  //   this.api.editPost(postId,reqBody,reqHeader).subscribe({
-  //     next:(res:any)=>{
-  //       console.log(res);
-  //       alert('post updated')
-  //     },
-  //     error:(err:any)=>{
-  //       console.log(err);
-  //       alert(err)
-
-  //     }
-  //   })
-  // }
-
+}
 
   // delete post
-  deletepost(postId:any){
+  deletepost(_id:any){
 
     const reqHeader = new HttpHeaders().set("Authorization", `Bearer ${this.token}`)
 
-    this.api.deletepost(postId,reqHeader).subscribe({
+    this.api.deletepost(_id,reqHeader).subscribe({
       next: (res: any) => {
         console.log(res);
         alert('post deleted successfully')
@@ -166,14 +173,44 @@ export class UserprofileComponent implements OnInit {
   }
 
 
+  // handleAddPost(form: NgForm): void {
+  //   if (!form.valid) {
+  //     alert("please fill the form")
+  //   } else {
+  //     const reqBody = new FormData();
+  //     reqBody.append("recipename", this.postDetails.recipename)
+  //     reqBody.append("description", this.postDetails.description)
+  //     reqBody.append("image", this.postDetails.image)
+
+
+  //     const reqHeader = new HttpHeaders().set("Authorization", `Barear ${this.token}`)
+
+  //     // add post
+  //     this.api.addPost(reqBody, reqHeader).subscribe({
+  //       next: (res: any) => {
+  //         console.log(res);
+  //         alert('Posting...')
+
+  //       },
+  //       error: (err: any) => {
+  //         console.log(err);
+  //         alert(err)
+  //       }
+  //     })
+  //   }
+
+  // }
+
+
+
   handleAddPost(form: NgForm): void {
     if (!form.valid) {
       alert("please fill the form")
     } else {
       const reqBody = new FormData();
-      reqBody.append("recipename", this.postDetails.recipename)
-      reqBody.append("description", this.postDetails.description)
-      reqBody.append("image", this.postDetails.image)
+      reqBody.append("recipename", this.postDetailsprofile.recipename)
+      reqBody.append("description", this.postDetailsprofile.description)
+      reqBody.append("image", this.postDetailsprofile.image)
 
 
       const reqHeader = new HttpHeaders().set("Authorization", `Barear ${this.token}`)

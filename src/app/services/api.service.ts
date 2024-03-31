@@ -49,11 +49,11 @@ export class ApiService {
 
   // edit post
   editPost=(postId:any,reqBody:any,reqHeader:any)=>{
-    return this.http.put<any>(`${this.SERVER_URL}/posts/edits/${postId}`,reqBody,reqHeader)
+    return this.http.put<any>(`${this.SERVER_URL}/posts/edits/${postId}`,reqBody,{ headers: reqHeader })
   }
 
   // delete post
   deletepost=(postId:any,reqHeader:any)=>{
-    return this.http.delete<any>(`${this.SERVER_URL}/posts/delete/${postId}`,reqHeader)
+    return this.http.delete<any>(`${this.SERVER_URL}/posts/delete/${postId}`,{ headers: reqHeader })
   }
 }

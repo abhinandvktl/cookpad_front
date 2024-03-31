@@ -24,11 +24,11 @@ export class MaincontentComponent implements OnInit {
 
   // userId:any=''
 
-  SERVER_URL='http://localhost:3000'
+  SERVER_URL = 'http://localhost:3000'
 
-  whopost:any= []
+  whopost: any = []
 
-  
+
   constructor(private api: ApiService, private http: HttpClient) { }
 
   onFileSelected(event: any): void {
@@ -43,9 +43,14 @@ export class MaincontentComponent implements OnInit {
 
     this.getAllPosts();
 
+
     // this.getwhopost()
 
+
+
   }
+
+
 
 
   handleAddPost(form: NgForm): void {
@@ -83,13 +88,31 @@ export class MaincontentComponent implements OnInit {
     const reqHeader = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
 
     this.api.getallUsersPosts(reqHeader).subscribe({
-      next: (res: any) => {
-        console.log(res);
-        // alert('Getting all posts...')
-        this.allposts = res
-        // console.log(this.allposts);
+      next: (res: any[]) => {
 
-        // this.handlePosts();
+        this.allposts = res
+
+        // Reverse the order of posts
+        this.allposts.reverse();
+
+
+        this.allposts.forEach((post: any) => {
+
+          // getwhopost api
+          this.api.whoPostAPI(post.userId).subscribe({
+            next: (res: any) => {
+              post.res = res
+
+            },
+            error: (err: any) => {
+              console.log(err);
+            }
+          })
+
+          console.log(this.allposts);
+
+        });
+
 
 
       },
@@ -100,26 +123,5 @@ export class MaincontentComponent implements OnInit {
     })
   }
 
-  // Define a function to handle the posts
-// handlePosts(): void {
-//     console.log(this.allposts.map(item:any => item.userId));
-// }
-
-  // getwhoposts
-  getwhopost(userId:any): void {    
-    this.api.whoPostAPI(userId).subscribe({
-      next: (res: any) => {
-        console.log(res);
-
-        console.log(res.username);
-        this.whopost = res
-        
-      },
-      error: (err: any) => {
-        console.log(err);
-        // alert('hlo')
-      }
-    })
-  }
 
 }

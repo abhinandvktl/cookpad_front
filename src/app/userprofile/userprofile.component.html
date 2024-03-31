@@ -84,56 +84,66 @@
                                             data-bs-target="#posteditModel"><i class="fa-solid fa-pen-to-square"></i>
                                             Edit</a>
                                     </li>
-                                    <li><a class="dropdown-item" (click)="deletepost(userpost.id)"><i class="fa-solid fa-trash"></i> Delete</a>
+                                    <li><a class="dropdown-item" (click)="deletepost(userpost._id)"><i
+                                                class="fa-solid fa-trash"></i> Delete</a>
                                     </li>
                                 </ul>
 
                                 <!-- edit Modal -->
-                                <div class="modal fade" id="posteditModel" tabindex="-1"
-                                    aria-labelledby="posteditmodelLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="posteditmodelLabel">Edit Post</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- recipe name -->
-                                                <div class="form-floating mb-3">
-                                                    <input type="email" name="id"
-                                                        class="form-control" id="recipenameInput" placeholder="recipename"
-                                                        [(ngModel)]="recipename" required>
-                                                    <label for="floatingInput">Recipe Name</label>
+                                <form #addpostForm="ngForm" (ngSubmit)="handleupdate(addpostForm, userpost)">
+                                    <div class="modal fade" id="posteditModel" data-bs-backdrop="static"
+                                        data-bs-keyboard="false" tabindex="-1" aria-labelledby="posteditModelLabel"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="posteditModelLabel">Upload</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
                                                 </div>
-                                                <!-- How to make it -->
-                                                <div class="form-floating mb-3">
-                                                    <textarea name="description"
-                                                        class="form-control" id="descriptionInput" placeholder="description"
-                                                        [(ngModel)]="description" style="height: 100px"
-                                                        required></textarea>
-                                                    <label for="floatingTextarea2">How to make it..?</label>
+                                                <div class="modal-body">
+                                                    <!-- recipe name -->
+                                                    <div class="form-floating mb-3">
+                                                        <input type="email" #recipename="ngModel"
+                                                            [(ngModel)]="userpost.recipename" name="id"
+                                                            class="form-control" id="floatingInput"
+                                                            placeholder="name@example.com" required>
+                                                        <label for="floatingInput">Recipe Name</label>
+                                                    </div>
+                                                    <!-- How to make it -->
+                                                    <div class="form-floating mb-3">
+                                                        <textarea #description="ngModel"
+                                                            [(ngModel)]="userpost.description" name="description"
+                                                            class="form-control" placeholder="Leave a comment here"
+                                                            id="floatingTextarea2" style="height: 100px"
+                                                            required></textarea>
+                                                        <label for="floatingTextarea2">How to make it..?</label>
+                                                    </div>
+                                                    <!-- image upload -->
+                                                    <div class="input-group">
+                                                        <input type="file" name="image" #fileInput
+                                                            (change)="onFileSelected($event,userpost)"
+                                                            class="form-control" id="inputGroupFile04"
+                                                            aria-describedby="inputGroupFileAddon04" aria-label="Upload"
+                                                            required>
+                                                    </div>
+
                                                 </div>
-                                                <!-- image upload -->
-                                                <div class="input-group">
-                                                    <input type="file" name="image" class="form-control"
-                                                        id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
-                                                        aria-label="Upload" required>
+                                                <div class="modal-footer">
+                                                    <button type="submit"
+                                                        class="btn btn-outline-secondary">Upload</button>
                                                 </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-outline-secondary" (click)="handleupdate($event)">Save changes</button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
 
                             <div>
 
                                 <p class="d-inline-flex gap-1">
-                                    <a class="btn" data-bs-toggle="collapse" href="#{{userpost.description}}" role="button"
-                                        aria-expanded="false" aria-controls="collapseExample">
+                                    <a class="btn" data-bs-toggle="collapse" href="#{{userpost.description}}"
+                                        role="button" aria-expanded="false" aria-controls="collapseExample">
                                         {{userpost.recipename}} <i class="fa-solid fa-arrow-down"></i>
                                     </a>
                                 </p>
@@ -143,7 +153,8 @@
                                     </div>
                                 </div>
 
-                                <img [src]="SERVER_URL + '/uploads/' + userpost.image" alt="recipeimage" width="100%" height="100%">
+                                <img [src]="SERVER_URL + '/uploads/' + userpost.image" alt="recipeimage" width="100%"
+                                    height="100%">
                             </div>
 
                         </div>
@@ -157,53 +168,55 @@
             <div class="col-4">
 
                 <!-- upload post -->
-                <div class="uploadpost bg-body-secondary mt-2 p-3 mb-2">
+                <div class="uploadpost bg-body-secondary mt-2 p-3">
                     <button type="button" class="btn btn-light w-75" data-bs-toggle="modal"
                         data-bs-target="#staticBackdrop">
                         <i class="fa-solid fa-image" style="color: #12983f;"></i>Upload Your Post...
                     </button>
                 </div>
 
-                <!-- Modal -->
-
-                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Upload</h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-
-                                <!-- recipe name -->
-
-                                <div class="form-floating mb-3">
-                                    <input type="email" class="form-control" id="floatingInput"
-                                        placeholder="name@example.com">
-                                    <label for="floatingInput">Recipe Name</label>
+                <!-- addpost Modal -->
+                <form #addpostForm="ngForm" (ngSubmit)="handleAddPost(addpostForm)">
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Upload</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
+                                <div class="modal-body">
+                                    <!-- recipe name -->
+                                    <div class="form-floating mb-3">
+                                        <input type="email" #recipename="ngModel" [(ngModel)]="postDetailsprofile.recipename"
+                                            name="id" class="form-control" id="floatingInput"
+                                            placeholder="name@example.com" required>
+                                        <label for="floatingInput">Recipe Name</label>
+                                    </div>
+                                    <!-- How to make it -->
+                                    <div class="form-floating mb-3">
+                                        <textarea #description="ngModel" [(ngModel)]="postDetailsprofile.description"
+                                            name="description" class="form-control" placeholder="Leave a comment here"
+                                            id="floatingTextarea2" style="height: 100px" required></textarea>
+                                        <label for="floatingTextarea2">How to make it..?</label>
+                                    </div>
+                                    <!-- image upload -->
+                                    <div class="input-group">
+                                        <input type="file" name="image" #fileInput
+                                            (change)="onFileSelectedprofile($event)" class="form-control"
+                                            id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                                            aria-label="Upload" required>
+                                    </div>
 
-                                <!-- How to make it -->
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" placeholder="Leave a comment here"
-                                        id="floatingTextarea2" style="height: 100px"></textarea>
-                                    <label for="floatingTextarea2">How to make it..?</label>
                                 </div>
-                                <!-- image upload -->
-                                <div class="input-group">
-                                    <input type="file" class="form-control" id="inputGroupFile04"
-                                        aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-outline-secondary">Upload</button>
                                 </div>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-outline-secondary">Upload</button>
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
                 <hr>
                 <div class="bg-body-secondary pb-5">
                     <img src="https://i.postimg.cc/VLMLJH8H/COOKPAD-LOGO.png" alt="no image" width="50%" height="50%">

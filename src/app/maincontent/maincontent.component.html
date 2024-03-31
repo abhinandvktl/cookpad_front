@@ -18,21 +18,24 @@
                 <div class="modal-body">
                     <!-- recipe name -->
                     <div class="form-floating mb-3">
-                        <input type="email" #recipename="ngModel" [(ngModel)]="postDetails.recipename" name="id" class="form-control" id="floatingInput" placeholder="name@example.com" required>
+                        <input type="email" #recipename="ngModel" [(ngModel)]="postDetails.recipename" name="id"
+                            class="form-control" id="floatingInput" placeholder="name@example.com" required>
                         <label for="floatingInput">Recipe Name</label>
                     </div>
                     <!-- How to make it -->
                     <div class="form-floating mb-3">
-                        <textarea #description="ngModel" [(ngModel)]="postDetails.description" name="description" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+                        <textarea #description="ngModel" [(ngModel)]="postDetails.description" name="description"
+                            class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
                             style="height: 100px" required></textarea>
                         <label for="floatingTextarea2">How to make it..?</label>
                     </div>
                     <!-- image upload -->
                     <div class="input-group">
-                        <input type="file" name="image" #fileInput (change)="onFileSelected($event)" class="form-control" id="inputGroupFile04" 
-                            aria-describedby="inputGroupFileAddon04" aria-label="Upload" required>
+                        <input type="file" name="image" #fileInput (change)="onFileSelected($event)"
+                            class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                            aria-label="Upload" required>
                     </div>
-                    
+
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-outline-secondary">Upload</button>
@@ -54,16 +57,18 @@
                 </div>
 
                 <div class="ms-3">
-                  
-                    <h5 class="card-title">{{whopost.username}}</h5>
+
+                    <!-- <h5 class="card-title">{{whopost.username}}</h5> -->
+                    <h5 class="card-title">{{ posts.res?.username }}</h5>   
+
                 </div>
             </div>
 
             <div>
 
                 <p class="d-inline-flex gap-1">
-                    <a class="btn" data-bs-toggle="collapse" href=#{{posts.description}} role="button" aria-expanded="false"
-                        aria-controls="collapseExample">
+                    <a class="btn" data-bs-toggle="collapse" href=#{{posts.description}} role="button"
+                        aria-expanded="false" aria-controls="collapseExample">
                         {{posts.recipename}} <i class="fa-solid fa-arrow-down"></i>
                     </a>
                 </p>
@@ -73,11 +78,9 @@
                     </div>
                 </div>
 
-                <img [src]="SERVER_URL + '/uploads/' + posts.image"
-                    width="100%" height="100%">
+                <img [src]="SERVER_URL + '/uploads/' + posts.image" width="100%" height="100%">
             </div>
 
         </div>
     </div>
 </div>
-
