@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 
+  // for logging
+
   existingUser: any;
 
   constructor() { }
@@ -15,6 +17,13 @@ export class UserService {
 
   getLoggedInUser() {
     return this.existingUser;
+  }
+
+  // for logout
+  logout() {
+    this.existingUser = null;
+    sessionStorage.removeItem('loggedInUser');
+    sessionStorage.removeItem('token');
   }
   
 }

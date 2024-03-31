@@ -5,7 +5,7 @@
     </button>
 </div>
 
-<!-- Modal -->
+<!-- addpost Modal -->
 <form #addpostForm="ngForm" (ngSubmit)="handleAddPost(addpostForm)">
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -44,7 +44,7 @@
 
 <!-- post body -->
 <div class="posts bg-body-secondary mt-4 p-3">
-    <div *ngFor="let users of allUsers" class="card">
+    <div *ngFor="let posts of allposts" class="card">
         <div class="card-body">
 
             <div class="d-flex">
@@ -54,31 +54,26 @@
                 </div>
 
                 <div class="ms-3">
-                    <h5 class="card-title">{{users.username}}</h5>
+                  
+                    <h5 class="card-title">{{whopost.username}}</h5>
                 </div>
             </div>
 
             <div>
 
                 <p class="d-inline-flex gap-1">
-                    <a class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+                    <a class="btn" data-bs-toggle="collapse" href=#{{posts.description}} role="button" aria-expanded="false"
                         aria-controls="collapseExample">
-                        recipe name <i class="fa-solid fa-arrow-down"></i>
+                        {{posts.recipename}} <i class="fa-solid fa-arrow-down"></i>
                     </a>
                 </p>
-                <div class="collapse" id="collapseExample">
+                <div class="collapse" id="{{posts.description}}">
                     <div class="card card-body">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ea illo ratione non
-                        cumque? Nihil fugiat obcaecati sunt natus culpa unde dolorem, voluptatibus tempora eligendi
-                        eveniet recusandae illo atque praesentium. Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit. Cupiditate velit alias, qui perferendis dolore accusantium molestias itaque hic optio quis
-                        nulla atque distinctio molestiae reprehenderit magnam nam. Quasi, illum deserunt? Lorem, ipsum
-                        dolor sit amet consectetur adipisicing elit. Tempore hic nam exercitationem rem quam est aperiam
-                        fugiat accusantium harum nemo, neque illum officia amet, iste corrupti quasi natus, ipsa dolore!
+                        {{posts.description}}
                     </div>
                 </div>
 
-                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Hamburger_%2812164386105%29.jpg" alt=""
+                <img [src]="SERVER_URL + '/uploads/' + posts.image"
                     width="100%" height="100%">
             </div>
 

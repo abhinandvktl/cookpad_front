@@ -5,6 +5,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { HttpClient } from '@angular/common/http';
 
 
+
 @Component({
   selector: 'app-maincontent',
   templateUrl: './maincontent.component.html',
@@ -16,23 +17,34 @@ export class MaincontentComponent implements OnInit {
   fileInput!: ElementRef;
 
   // class property
-  allUsers: any = []
+  allposts: any = []
 
   postDetails = { recipename: '', description: '', image: '' }
   token: string = ''
 
+  // userId:any=''
+
+  SERVER_URL='http://localhost:3000'
+
+  whopost:any= []
+
+  
   constructor(private api: ApiService, private http: HttpClient) { }
 
-  onFileSelected(event:any): void {
+  onFileSelected(event: any): void {
     const file = event.target.files[0];
     this.postDetails.image = file;
   }
 
   ngOnInit(): void {
-    // this.getAllUsersapi()
 
-    const storedToken =sessionStorage.getItem('token')
-    this.token=storedToken?storedToken:''
+    const storedToken = sessionStorage.getItem('token')
+    this.token = storedToken ? storedToken : '';
+
+    this.getAllPosts();
+
+    // this.getwhopost()
+
   }
 
 
@@ -58,30 +70,56 @@ export class MaincontentComponent implements OnInit {
         error: (err: any) => {
           console.log(err);
           alert(err)
-          
-
         }
       })
     }
 
-
   }
 
+  // getall post 
+
+  getAllPosts(): void {
+
+    const reqHeader = new HttpHeaders().set("Authorization", `Bearer ${this.token}`);
+
+    this.api.getallUsersPosts(reqHeader).subscribe({
+      next: (res: any) => {
+        console.log(res);
+        // alert('Getting all posts...')
+        this.allposts = res
+        // console.log(this.allposts);
+
+        // this.handlePosts();
 
 
+      },
+      error: (err: any) => {
+        console.log(err);
+        alert(err)
+      }
+    })
+  }
 
-  // get all users
-  // getAllUsersapi = () => {
-  //   this.api.getAllUsers().subscribe({
-  //     next: (res: any) => {
-  //       console.log(res);
-  //       this.allUsers = res
-  //     },
-  //     error: (err: any) => {
-  //       console.log(err);
+  // Define a function to handle the posts
+// handlePosts(): void {
+//     console.log(this.allposts.map(item:any => item.userId));
+// }
 
-  //     }
-  //   })
-  // }
+  // getwhoposts
+  getwhopost(userId:any): void {    
+    this.api.whoPostAPI(userId).subscribe({
+      next: (res: any) => {
+        console.log(res);
+
+        console.log(res.username);
+        this.whopost = res
+        
+      },
+      error: (err: any) => {
+        console.log(err);
+        // alert('hlo')
+      }
+    })
+  }
 
 }

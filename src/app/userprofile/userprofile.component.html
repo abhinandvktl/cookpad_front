@@ -1,7 +1,7 @@
 <app-header></app-header>
 
 <div class="user-profile-section">
-    
+
     <div class="profile bg-body-secondary mt-2 pt-3">
 
         <div class="d-flex justify-content-center">
@@ -15,16 +15,52 @@
         <div class="d-flex justify-content-center">
             <p>{{loggeduserdetails?.email}}</p>
         </div>
+        <div class="d-flex justify-content-end me-3">
+            <!-- profile edit button -->
+            <button type="button" class="profileedit btn btn-outline-secondary" data-bs-toggle="modal"
+                data-bs-target="#profileeditModal">
+                <i class="fa-solid fa-user-pen"></i>
+            </button>
+
+            <!-- profile edit modal -->
+            <div class="modal fade" id="profileeditModal" tabindex="-1" aria-labelledby="profileeditModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit Profile</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="usernameInput" placeholder="username"
+                                    [(ngModel)]="username">
+                                <label for="usernameInput">Username</label>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" (click)="editUserinfo()">Save
+                                Edit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
 
     </div>
 
     <div class="container text-center">
         <div class="row">
             <div class="col-8">
-                
+
                 <!-- post body -->
                 <div class="posts bg-body-secondary mt-2 p-3 mb-2">
-                    <div class="card">
+                    <div *ngFor="let userpost of userposts" class="card">
                         <div class="card-body">
 
                             <div class="d-flex">
@@ -34,40 +70,80 @@
                                 </div>
 
                                 <div class="ms-3">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                                    <h5 class="card-title">{{loggeduserdetails?.username}}</h5>
+                                    <!-- <h6 class="card-subtitle mb-2 text-body-secondary">{{loggeduserdetails?.email}}</h6> -->
+                                </div>
+
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#posteditModel"><i class="fa-solid fa-pen-to-square"></i>
+                                            Edit</a>
+                                    </li>
+                                    <li><a class="dropdown-item" (click)="deletepost(userpost.id)"><i class="fa-solid fa-trash"></i> Delete</a>
+                                    </li>
+                                </ul>
+
+                                <!-- edit Modal -->
+                                <div class="modal fade" id="posteditModel" tabindex="-1"
+                                    aria-labelledby="posteditmodelLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h1 class="modal-title fs-5" id="posteditmodelLabel">Edit Post</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- recipe name -->
+                                                <div class="form-floating mb-3">
+                                                    <input type="email" name="id"
+                                                        class="form-control" id="recipenameInput" placeholder="recipename"
+                                                        [(ngModel)]="recipename" required>
+                                                    <label for="floatingInput">Recipe Name</label>
+                                                </div>
+                                                <!-- How to make it -->
+                                                <div class="form-floating mb-3">
+                                                    <textarea name="description"
+                                                        class="form-control" id="descriptionInput" placeholder="description"
+                                                        [(ngModel)]="description" style="height: 100px"
+                                                        required></textarea>
+                                                    <label for="floatingTextarea2">How to make it..?</label>
+                                                </div>
+                                                <!-- image upload -->
+                                                <div class="input-group">
+                                                    <input type="file" name="image" class="form-control"
+                                                        id="inputGroupFile04" aria-describedby="inputGroupFileAddon04"
+                                                        aria-label="Upload" required>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-secondary" (click)="handleupdate($event)">Save changes</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
                             <div>
 
                                 <p class="d-inline-flex gap-1">
-                                    <a class="btn" data-bs-toggle="collapse" href="#collapseExample" role="button"
+                                    <a class="btn" data-bs-toggle="collapse" href="#{{userpost.description}}" role="button"
                                         aria-expanded="false" aria-controls="collapseExample">
-                                        recipe name <i class="fa-solid fa-arrow-down"></i>
+                                        {{userpost.recipename}} <i class="fa-solid fa-arrow-down"></i>
                                     </a>
                                 </p>
-                                <div class="collapse" id="collapseExample">
+                                <div class="collapse" id="{{userpost.description}}">
                                     <div class="card card-body">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus ea illo
-                                        ratione non
-                                        cumque? Nihil fugiat obcaecati sunt natus culpa unde dolorem, voluptatibus
-                                        tempora eligendi
-                                        eveniet recusandae illo atque praesentium. Lorem ipsum dolor sit amet,
-                                        consectetur adipisicing
-                                        elit. Cupiditate velit alias, qui perferendis dolore accusantium molestias
-                                        itaque hic optio quis
-                                        nulla atque distinctio molestiae reprehenderit magnam nam. Quasi, illum
-                                        deserunt? Lorem, ipsum
-                                        dolor sit amet consectetur adipisicing elit. Tempore hic nam exercitationem rem
-                                        quam est aperiam
-                                        fugiat accusantium harum nemo, neque illum officia amet, iste corrupti quasi
-                                        natus, ipsa dolore!
+                                        {{userpost.description}}
                                     </div>
                                 </div>
 
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Hamburger_%2812164386105%29.jpg"
-                                    alt="" width="100%" height="100%">
+                                <img [src]="SERVER_URL + '/uploads/' + userpost.image" alt="recipeimage" width="100%" height="100%">
                             </div>
 
                         </div>
@@ -108,7 +184,7 @@
                                         placeholder="name@example.com">
                                     <label for="floatingInput">Recipe Name</label>
                                 </div>
-                                
+
                                 <!-- How to make it -->
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" placeholder="Leave a comment here"
